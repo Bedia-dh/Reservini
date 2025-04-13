@@ -1,0 +1,18 @@
+body {
+    background: linear-gradient(120deg, #2980b9, #8e44ad);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    background-color: #6c5ce7;
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+}
