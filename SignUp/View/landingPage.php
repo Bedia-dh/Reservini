@@ -179,4 +179,101 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'restaurants';
             ?>
         </div>
     </div>
+    <div class="user-reviews">
+        <h2>User Reviews</h2>
+        <div id="userReviewsCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <?php
+                $reviews = CategoriesData::getUserReviews();
+                foreach ($reviews as $index => $review) {
+                    $activeClass = $index === 0 ? 'active' : '';
+                    echo "<div class='carousel-item $activeClass'>";
+                    echo "<div class='card'>";
+                    echo "<div class='card-body'>";
+                    echo "<h5 class='card-title'>{$review['user_name']}</h5>";
+                    echo "<p class='card-text'>{$review['snippet']}</p>";
+                    echo "<a href='{$review['link']}' class='btn btn-primary'>Read More</a>";
+                    echo "</div></div></div>";
+                }
+                ?>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#userReviewsCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#userReviewsCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+            
+    
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Coronavirus (COVID-19) FAQs</a></li>
+                    <li><a href="#">Manage your trips</a></li>
+                    <li><a href="#">Contact Customer Service</a></li>
+                    <li><a href="#">Safety Resource Center</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Discover</h3>
+                <ul>
+                    <li><a href="#">Genius loyalty program</a></li>
+                    <li><a href="#">Seasonal and holiday deals</a></li>
+                    <li><a href="#">Travel articles</a></li>
+                    <li><a href="#">Reservini for Business</a></li>
+                    <li><a href="#">Traveller Review Awards</a></li>
+                    <li><a href="#">Car rental</a></li>
+                    <li><a href="#">Flight finder</a></li>
+                    <li><a href="#">Restaurant reservations</a></li>
+                    <li><a href="#">Reservini for Travel Agents</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Terms and settings</h3>
+                <ul>
+                    <li><a href="#">Privacy & cookies</a></li>
+                    <li><a href="#">Terms & conditions</a></li>
+                    <li><a href="#">Partner dispute</a></li>
+                    <li><a href="#">Modern Slavery Statement</a></li>
+                    <li><a href="#">Human Rights Statement</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Partners</h3>
+                <ul>
+                    <li><a href="#">Extranet login</a></li>
+                    <li><a href="#">Partner help</a></li>
+                    <li><a href="#">List your property</a></li>
+                    <li><a href="#">Become an affiliate</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="#">About Reservini</a></li>
+                    <li><a href="#">How We Work</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Press center</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Investor relations</a></li>
+                    <li><a href="#">Corporate contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <?php echo date('Y'); ?> Reservini. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
     

@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../Config/database.php');
 
 // Check if ID is provided
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    header("Location: user_list.php");
+    header("Location: users_list.php");
     exit();
 }
 
@@ -13,18 +13,35 @@ $id = $_GET['id'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
-
-    if (empty($user_name)|| empty($email)) {
-        $error = "Please fill in all fields.";
-    }else{
+    
+    if (empty($name) || empty($email)) {
+        $error = "Please fill in all required fields.";
+    } else {
+        // Build update query
+        $updateFields = ["name = ?", "email = ?"];
+        $types = "ss";
+        $values = [$name, $email];
+        
+        // If password is provided, update it too
+        if (!empty($_POST['password'])) {
+            $updateFields[] = "password = ?";
+            $types .= "s";
+            $values[] = password_hash($_POST['password'], PASSWORD_BCRYPT);
+        }
+        
+        $types .= "i"; // for the id in WHERE clause
+        $values[] = $id;
+        
         // Update user data in database
-        $stmt = $conn->prepare("UPDATE users SET name =?, email =? WHERE id =?");
-        $stmt->bind_param("ssi", $name, $email, $id);
+        $query = "UPDATE users SET " . implode(", ", $updateFields) . " WHERE id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param($types, ...$values);
+        
         if ($stmt->execute()) {
-            header("Location: user_list.php?update=true");
+            header("Location: users_list.php?updated=1");
             exit();
-        }else{
-        $error = "Error updating user." . $conn->error;
+        } else {
+            $error = "Error updating user: " . $conn->error;
         }
     }
 }
@@ -35,7 +52,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
-    header("Location: user_list.php");
+    header("Location: users_list.php");
     exit();
 }
 
@@ -72,9 +89,13 @@ $user = $result->fetch_assoc();
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password (leave empty to keep current)</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">Update User</button>
-                                <a href="user_list.php" class="btn btn-secondary">Cancel</a>
+                                <a href="users_list.php" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>
                     </div>

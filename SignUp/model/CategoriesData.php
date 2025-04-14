@@ -239,6 +239,22 @@ class CategoriesData {
         ];
     }
 
+    public static function getUserReviews() {
+        // Sample data for demonstration
+        return [
+            [
+                'user_name' => 'John Doe',
+                'snippet' => 'Great experience, highly recommend!',
+                'link' => '#'
+            ],
+            [
+                'user_name' => 'Jane Smith',
+                'snippet' => 'Loved the ambiance and service.',
+                'link' => '#'
+            ]
+        ];
+    }
+
     public static function getBestDeals($category){
         $deals = [
             'restaurants' => [
