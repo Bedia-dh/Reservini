@@ -47,6 +47,23 @@ input{
 	outline: none;
 	border-radius: 5px;
 }
+.form-select {
+    width: 67%;
+    height: 25px;
+    background: #d4c4c4;
+    margin: 20px auto;
+    padding: 0 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 15px;
+    display: block;
+}
+.signup button {
+	margin-top: 10px;
+	position: relative;
+	z-index: 10;
+}
 button{
 	width: 60%;
 	height: 40px;

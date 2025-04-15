@@ -18,6 +18,11 @@ if (isset($_GET['signup']) && $_GET['signup'] == 'success') {
 					<label for="chk" aria-hidden="true">Sign up</label>
 					<input type="text" name="user_name" placeholder="User name" required="">
 					<input type="email" name="email" placeholder="Email" required="">
+					<select class="form-select" id="role" name="role" required>
+						<option value="" disabled selected>Register as</option>
+						<option value="client">Client</option>
+						<option value="admin">Admin</option>
+					</select>
 					<input type="password" name="password" placeholder="Password" required="">
 					<button type="submit" name="signup">Sign up</button>
 				</form>

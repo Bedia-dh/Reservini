@@ -13,14 +13,14 @@ $id = $_GET['id'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
-    
-    if (empty($name) || empty($email)) {
+    $role = trim($_POST['role']);
+    if (empty($name) || empty($email) || empty($role)) {
         $error = "Please fill in all required fields.";
     } else {
         // Build update query
-        $updateFields = ["name = ?", "email = ?"];
-        $types = "ss";
-        $values = [$name, $email];
+        $updateFields = ["name = ?", "email = ?","role = ?"];
+        $types = "sss";
+        $values = [$name, $email,$role];
         
         // If password is provided, update it too
         if (!empty($_POST['password'])) {
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$stmt = $conn->prepare("SELECT name, email FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT name, email, role FROM users WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -89,6 +89,11 @@ $user = $result->fetch_assoc();
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="role" class="form-label">Role</label>
+                                <select class="form-control" id="role" name="role" required>
+                                    <option value="admin" <?= ($user['role'] === 'admin') ? 'selected' : ''?>>Admin</option>
+                                    <option value="user" <?= ($user['role'] === 'user')?'selected' : ''?>>Client</option>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password (leave empty to keep current)</label>
                                 <input type="password" class="form-control" id="password" name="password">
